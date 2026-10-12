@@ -109,6 +109,28 @@ namespace BoiteNuitTestDemo.UnitTest
             Assert.Equal(ErrorName.AgeIsUnder16, exception.Message);
         }
 
+        [Theory]
+        [InlineData("Tes")] // moin que 4
+        [InlineData("Test")] // tout juste 4
+        [InlineData("testing")] // + que 4 mais pas de majuscule
+        public void Create_WhenPasswordIsInvalid_ShouldThrowArgumentException(string passwordTest)
+        {
+            // ARRANGE
+            string prenom = "Robert";
+            string email = "test@Password.fr";
+            int age = 18;
+            ClientService clientService = new(_MockValidator.Object);
+
+            // ACT
+
+            Exception exception = Assert.Throws<ArgumentException>(() => 
+            clientService.Create(prenom, age, email, passwordTest));
+
+            // ASSERT
+            Assert.Equal(ErrorName.PasswordIsInvalid, exception.Message);
+
+        }
+
         // UPDATE ----------------------
 
         [Fact]
@@ -121,7 +143,7 @@ namespace BoiteNuitTestDemo.UnitTest
             string prenom = "nouveau";
             int age = 18;
             string email = "nathan@gmail.com";
-            string password = "Test123";
+            string password = "Te";
             ClientService clientService = new(_MockValidator.Object);
 
             // J'appel mon isEmailUnique en bypassant la logique à l'intérieur
@@ -137,9 +159,49 @@ namespace BoiteNuitTestDemo.UnitTest
             // ASSERT
 
             Assert.Equal(ErrorName.EmailAlreadyExist, exception.Message);
-          
-
-
         }
+
+        [Fact]
+        public void Update_WhenAgeIsInvalid_ShouldThrowArgumentException()
+        {
+            // ARRANGE
+            int id = 1;
+            string prenom = "ageInvalide";
+            int age = 14;
+            string email = "hugo@gmaieel.com";
+            string password = "Test123))))";
+            ClientService clientService = new(_MockValidator.Object);
+
+            _MockValidator.Setup(x => x.isEmailUnique(It.IsAny<string>())).Returns(true);
+            _MockValidator.Setup(x => x.isAgeValid(It.IsAny<int>())).Returns(false);
+
+            // ACT
+
+            ArgumentException exception = Assert.Throws<ArgumentException>(() =>
+                clientService.Update(id, prenom, age, email, password)
+            );
+
+            // ASSERT
+            Assert.Equal(ErrorName.AgeIsUnder16, exception.Message);
+        }
+
+        [Fact]
+        public void Update_WhenPasswordIsInvalid_ShouldThrowArgumentException()
+        {
+            // ARRANGE
+            int id = 1;
+            string prenom = "nimporteQuelPrenom";
+            ClientService clientService = new(_MockValidator.Object);
+            _MockValidator.Setup(x => x.isEmailUnique(It.IsAny<string>())).Returns(true);
+            _MockValidator.Setup(x => x.isAgeValid(It.IsAny<int>())).Returns(true);
+            _MockValidator.Setup(x => x.isPasswordValid(It.IsAny<string>())).Returns(false);
+
+            // ACT
+            ArgumentException exception = Assert.Throws<ArgumentException>(() =>
+            clientService.Update(id, prenom, 0, "", ""));
+
+            // ASSERT
+            Assert.Equal(ErrorName.PasswordIsInvalid, exception.Message);
+         }
     }
 }

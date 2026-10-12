@@ -38,6 +38,10 @@ public class ClientService
         // any avec char.isUpper()
         // Datannotation theory
 
+        if(password.Length < 4 || !password.Any(c => char.IsUpper(c)))
+        {
+            throw new ArgumentException(ErrorName.PasswordIsInvalid);
+        }
 
         return new Client(prenom, age, email, password);
     }
@@ -61,9 +65,19 @@ public class ClientService
         // faire sa condition
         // TESTER SI ON RENVOIE BIEN UNE EXCEPTION AVEC SON MESSAGE ERREUR
 
+        if(!_clientValidator.isAgeValid(age))
+        {
+            throw new ArgumentException(ErrorName.AgeIsUnder16);
+        }
+
         //Appeler mon validator.isPasswordValid()
         //faire sa condition
         // TESTER SI ON RENVOIE BIEN UNE EXCEPTION AVEC SON MESSAGE ERREUR
+
+        if(!_clientValidator.isPasswordValid(password))
+        {
+            throw new ArgumentException(ErrorName.PasswordIsInvalid);
+        }
 
 
     }

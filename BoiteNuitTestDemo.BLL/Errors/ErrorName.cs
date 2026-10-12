@@ -22,5 +22,5 @@ public static class ErrorName
     public static readonly string EmailAlreadyExist = "Email already exists in database";
     public static readonly string AgeIsUnder16 = "The age of new client is too young because under 16";
 
-    // EXERCICE : ajouter ici le message d'erreur pour l'âge minimum
+    public static readonly string PasswordIsInvalid = "The password is less than 4 character or not have one upper";
 }

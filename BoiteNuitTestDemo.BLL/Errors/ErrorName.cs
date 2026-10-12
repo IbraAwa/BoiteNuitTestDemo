@@ -23,4 +23,6 @@ public static class ErrorName
     public static readonly string AgeIsUnder16 = "The age of new client is too young because under 16";
 
     public static readonly string PasswordIsInvalid = "The password is less than 4 character or not have one upper";
+
+    public static readonly string VideurNotValid = "Le videur doit être diplomé et avoir minimum 18ans";
 }

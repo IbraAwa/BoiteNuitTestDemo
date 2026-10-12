@@ -1,0 +1,5 @@
+<Solution>
+  <Project Path="BoiteNuitTestDemo.BLL/BoiteNuitTestDemo.BLL.csproj" />
+  <Project Path="BoiteNuitTestDemo.UnitTest/BoiteNuitTestDemo.UnitTest.csproj" />
+  <Project Path="BoiteNuitTestDemo/BoiteNuitTestDemo.csproj" />
+</Solution>

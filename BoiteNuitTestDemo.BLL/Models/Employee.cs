@@ -2,10 +2,18 @@
 
 public class Employee
 {
-    public string prenom { get; set; }
-    public Status status { get; set; }
-    public bool haveDiplome { get; set; }
-    public int age { get; set; }
+    public Employee(string prenom, Status status, bool haveDiplome, int age)
+    {
+        Prenom = prenom;
+        Status = status;
+        HaveDiplome = haveDiplome;
+        Age = age;
+    }
+
+    public string Prenom { get; set; }
+    public Status Status { get; set; }
+    public bool HaveDiplome { get; set; }
+    public int Age { get; set; }
 }
 
 
